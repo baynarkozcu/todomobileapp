@@ -13,9 +13,21 @@ class TodoList extends StatelessWidget {
       child: ListView.builder(
         itemCount: todos.length,
         itemBuilder: (context, index) {
-          return ListTile(
-            title: Text(todos[index].title),
-            subtitle: Text(todos[index].content),
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(5),
+                color: todos[index].priority < 5  ?  Colors.green.shade300 : Colors.red.shade200,
+              ),
+              child: ListTile(
+                onTap: () {
+                  
+                },
+                title: Text(todos[index].title),
+                subtitle: Text(todos[index].content),
+              ),
+            ),
           );
         },
       ),

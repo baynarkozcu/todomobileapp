@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_mobile/models/todo.dart';
+import 'package:todo_mobile/screens/addtodo.dart';
 import 'package:todo_mobile/screens/todolist.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -8,9 +9,9 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  TextEditingController controllerTitle = TextEditingController();
-  TextEditingController controllerContent = TextEditingController();
-  TextEditingController controllerPriority = TextEditingController();
+  TextEditingController _controllerTitle = TextEditingController();
+  TextEditingController _controllerContent = TextEditingController();
+  TextEditingController _controllerPriority = TextEditingController();
   List<Todo> _todos = [
     Todo(title: "Deneme Başlık", content: "Deneme içerikkkk", priority: 2)
   ];
@@ -20,41 +21,10 @@ class _MyHomePageState extends State<MyHomePage> {
         context: context,
         builder: (_) => new AlertDialog(
               title: new Text("Add  Todo"),
-              content: Container(
-                height: MediaQuery.of(context).size.height / 3,
-                child: Column(
-      children: [
-        TextField(
-          controller: controllerTitle,
-          decoration: InputDecoration(
-              hintText: "Please Enter Todo Title",
-              border:
-                  OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
-        ),
-        SizedBox(
-          height: 15,
-        ),
-        TextField(
-          controller: controllerContent,
-          decoration: InputDecoration(
-              hintText: "Please Enter Todo Content",
-              border:
-                  OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
-        ),
-        SizedBox(
-          height: 15,
-        ),
-        TextField(
-          keyboardType: TextInputType.number,
-          controller: controllerPriority,
-          decoration: InputDecoration(
-              hintText: "Please Enter Todo Priority",
-              
-              border:
-                  OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
-        ),
-      ],
-    ),
+              content: TodoAdd(
+                controllerTitle: _controllerTitle,
+                controllerContent: _controllerContent,
+                controllerPriority: _controllerPriority,
               ),
               actions: <Widget>[
                 FlatButton(
@@ -69,9 +39,9 @@ class _MyHomePageState extends State<MyHomePage> {
                   onPressed: () {
                     setState(() {
                       _todos.add(Todo(
-                          title: controllerTitle.text,
-                          content: controllerContent.text,
-                          priority: int.parse(controllerPriority.text)));
+                          title: _controllerTitle.text,
+                          content: _controllerContent.text,
+                          priority: int.parse(_controllerPriority.text)));
                     });
 
                     Navigator.of(context).pop();
@@ -84,32 +54,34 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
-        backgroundColor: Colors.pink.shade200,
-        title: Text("TodoList"),
-        centerTitle: true,
-        leading: Padding(
-            padding: EdgeInsets.only(left: 25), child: Icon(Icons.menu)),
-        actions: [
-          Padding(
-            padding: EdgeInsets.only(right: 25),
-            child: Icon(
-              Icons.search,
-            ),
-          )
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          _showMaterialDialog();
-        },
-        backgroundColor: Colors.pink.shade200,
-        child: Icon(
-          Icons.add,
+        appBar: AppBar(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
+          backgroundColor: Colors.pink.shade200,
+          title: Text("TodoList"),
+          centerTitle: true,
+          leading: Padding(
+              padding: EdgeInsets.only(left: 25), child: Icon(Icons.menu)),
+          actions: [
+            Padding(
+              padding: EdgeInsets.only(right: 25),
+              child: Icon(
+                Icons.search,
+              ),
+            )
+          ],
         ),
-      ),
-      body: TodoList(todos: _todos,)
-    );
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            _showMaterialDialog();
+          },
+          backgroundColor: Colors.pink.shade200,
+          child: Icon(
+            Icons.add,
+          ),
+        ),
+        body: TodoList(
+          todos: _todos,
+        ));
   }
 }

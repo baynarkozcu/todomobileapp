@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_mobile/models/todo.dart';
+import 'package:todo_mobile/screens/todolist.dart';
 
 class MyHomePage extends StatefulWidget {
   @override
@@ -10,7 +11,7 @@ class _MyHomePageState extends State<MyHomePage> {
   TextEditingController controllerTitle = TextEditingController();
   TextEditingController controllerContent = TextEditingController();
   TextEditingController controllerPriority = TextEditingController();
-  List<Todo> todos = [
+  List<Todo> _todos = [
     Todo(title: "Deneme Başlık", content: "Deneme içerikkkk", priority: 2)
   ];
 
@@ -22,37 +23,38 @@ class _MyHomePageState extends State<MyHomePage> {
               content: Container(
                 height: MediaQuery.of(context).size.height / 3,
                 child: Column(
-                  children: [
-                    TextField(
-                      controller: controllerTitle,
-                      decoration: InputDecoration(
-                          hintText: "Please Enter Todo Title",
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10))),
-                    ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    TextField(
-                      controller: controllerContent,
-                      decoration: InputDecoration(
-                          hintText: "Please Enter Todo Content",
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10))),
-                    ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    TextField(
-                      keyboardType: TextInputType.number,
-                      controller: controllerPriority,
-                      decoration: InputDecoration(
-                          hintText: "Please Enter Todo Priority",
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10))),
-                    ),
-                  ],
-                ),
+      children: [
+        TextField(
+          controller: controllerTitle,
+          decoration: InputDecoration(
+              hintText: "Please Enter Todo Title",
+              border:
+                  OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
+        ),
+        SizedBox(
+          height: 15,
+        ),
+        TextField(
+          controller: controllerContent,
+          decoration: InputDecoration(
+              hintText: "Please Enter Todo Content",
+              border:
+                  OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
+        ),
+        SizedBox(
+          height: 15,
+        ),
+        TextField(
+          keyboardType: TextInputType.number,
+          controller: controllerPriority,
+          decoration: InputDecoration(
+              hintText: "Please Enter Todo Priority",
+              
+              border:
+                  OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
+        ),
+      ],
+    ),
               ),
               actions: <Widget>[
                 FlatButton(
@@ -66,10 +68,10 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: Text('Add'),
                   onPressed: () {
                     setState(() {
-                                            todos.add(Todo(
-                        title: controllerTitle.text,
-                        content: controllerContent.text,
-                        priority: int.parse(controllerPriority.text)));
+                      _todos.add(Todo(
+                          title: controllerTitle.text,
+                          content: controllerContent.text,
+                          priority: int.parse(controllerPriority.text)));
                     });
 
                     Navigator.of(context).pop();
@@ -107,18 +109,7 @@ class _MyHomePageState extends State<MyHomePage> {
           Icons.add,
         ),
       ),
-      body: Container(
-        color: Colors.white,
-        child: ListView.builder(
-          itemCount: todos.length,
-          itemBuilder: (context, index) {
-            return ListTile(
-              title: Text(todos[index].title),
-              subtitle: Text(todos[index].content),
-            );
-          },
-        ),
-      ),
+      body: TodoList(todos: _todos,)
     );
   }
 }

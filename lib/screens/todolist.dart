@@ -46,53 +46,58 @@ class _TodoListState extends State<TodoList> {
           ? Center(
               child: Text("There is nothing to do"),
             )
-          : ListView.builder(
-              itemCount: widget.todos.length,
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      color: widget.todos[index].priority <= 4
-                          ? Colors.green.shade300
-                          : Colors.red.shade200,
-                    ),
-                    child: ListTile(
-                      onTap: () {},
-                      title: Padding(
-                        padding: EdgeInsets.only(top: 10),
-                        child: Text(
-                          widget.todos[index].title,
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
+          : Align(
+              alignment: Alignment.topCenter,
+              child: ListView.builder(
+                reverse: true,
+                shrinkWrap: true,
+                itemCount: widget.todos.length,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        color: widget.todos[index].priority <= 4
+                            ? Colors.green.shade300
+                            : Colors.red.shade200,
                       ),
-                      subtitle: Padding(
-                          padding: EdgeInsets.only(top: 10, bottom: 10),
+                      child: ListTile(
+                        onTap: () {},
+                        title: Padding(
+                          padding: EdgeInsets.only(top: 10),
                           child: Text(
-                            widget.todos[index].content,
-                            style: TextStyle(color: Colors.white),
-                          )),
-                      trailing: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          InkWell(
-                            onTap: () => _areYouSure(widget.todos[index]),
-                            child: Icon(
-                              Icons.delete,
-                              color: Colors.red.shade700,
+                            widget.todos[index].title,
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
-                        ],
+                        ),
+                        subtitle: Padding(
+                            padding: EdgeInsets.only(top: 10, bottom: 10),
+                            child: Text(
+                              widget.todos[index].content,
+                              style: TextStyle(color: Colors.white),
+                            )),
+                        trailing: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            InkWell(
+                              onTap: () => _areYouSure(widget.todos[index]),
+                              child: Icon(
+                                Icons.delete,
+                                color: Colors.red.shade700,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                );
-              },
+                  );
+                },
+              ),
             ),
     );
   }

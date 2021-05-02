@@ -13,7 +13,7 @@ class _MyHomePageState extends State<MyHomePage> {
   TextEditingController _controllerContent = TextEditingController();
   TextEditingController _controllerPriority = TextEditingController();
   List<Todo> _todos = [
-    Todo(title: "sad" , content: "sadsad sa d d dad" , priority: 6)
+    Todo(title: "sad", content: "sadsad sa d d dad", priority: 6),
   ];
 
   _showMaterialDialog() {
@@ -37,12 +37,18 @@ class _MyHomePageState extends State<MyHomePage> {
                 FlatButton(
                   child: Text('Add'),
                   onPressed: () {
-                    setState(() {
-                      _todos.add(Todo(
-                          title: _controllerTitle.text,
-                          content: _controllerContent.text,
-                          priority: int.parse(_controllerPriority.text)));
-                    });
+
+                        setState(() {
+                          _todos.add(
+                              
+                              Todo(
+                                  title: _controllerTitle.text,
+                                  content: _controllerContent.text,
+                                  priority:
+                                      int.parse(_controllerPriority.text)));
+                        });
+                      
+                    
 
                     Navigator.of(context).pop();
                   },

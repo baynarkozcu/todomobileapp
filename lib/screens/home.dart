@@ -37,18 +37,12 @@ class _MyHomePageState extends State<MyHomePage> {
                 FlatButton(
                   child: Text('Add'),
                   onPressed: () {
-
-                        setState(() {
-                          _todos.add(
-                              
-                              Todo(
-                                  title: _controllerTitle.text,
-                                  content: _controllerContent.text,
-                                  priority:
-                                      int.parse(_controllerPriority.text)));
-                        });
-                      
-                    
+                    setState(() {
+                      _todos.add(Todo(
+                          title: _controllerTitle.text,
+                          content: _controllerContent.text,
+                          priority: int.parse(_controllerPriority.text)));
+                    });
 
                     Navigator.of(context).pop();
                   },
@@ -57,6 +51,9 @@ class _MyHomePageState extends State<MyHomePage> {
             ));
   }
 
+  bool search = false;
+  String searchKey="";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,15 +61,44 @@ class _MyHomePageState extends State<MyHomePage> {
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
           backgroundColor: Colors.pink.shade200,
-          title: Text("TodoList"),
+          title: search == false
+              ? Text("TodoList")
+              : Container(
+                  padding: EdgeInsets.symmetric(horizontal: 15),
+                  height: 35,
+                  child: TextField(
+                    decoration: InputDecoration(
+                      filled: true,
+                      fillColor: Colors.white,
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(25)),
+                    ),
+                    onChanged: (value) {
+                      setState(() {
+                        searchKey = value;
+                      });
+                      
+                    },
+                  ),
+                ),
           centerTitle: true,
           leading: Padding(
               padding: EdgeInsets.only(left: 25), child: Icon(Icons.menu)),
           actions: [
             Padding(
               padding: EdgeInsets.only(right: 25),
-              child: Icon(
-                Icons.search,
+              child: InkWell(
+                onTap: () {
+                  if (search) {
+                    search = false;
+                  } else {
+                    search = true;
+                  }
+                  setState(() {});
+                },
+                child: Icon(
+                  search ? Icons.cancel : Icons.search,
+                ),
               ),
             )
           ],
@@ -88,6 +114,9 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         body: TodoList(
           todos: _todos,
+          searchKey: searchKey,
+          search: search,
+          
         ));
   }
 }

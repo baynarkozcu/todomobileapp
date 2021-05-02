@@ -3,8 +3,11 @@ import 'package:todo_mobile/models/todo.dart';
 
 class TodoList extends StatefulWidget {
   final List<Todo> todos;
+  final String searchKey;
+  final bool search;
 
-  const TodoList({Key key, this.todos}) : super(key: key);
+  const TodoList({Key key, this.todos, this.searchKey, this.search})
+      : super(key: key);
 
   @override
   _TodoListState createState() => _TodoListState();
@@ -53,49 +56,99 @@ class _TodoListState extends State<TodoList> {
                 shrinkWrap: true,
                 itemCount: widget.todos.length,
                 itemBuilder: (context, index) {
-                  return Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        color: widget.todos[index].priority <= 4
-                            ? Colors.green.shade300
-                            : Colors.red.shade200,
-                      ),
-                      child: ListTile(
-                        onTap: () {},
-                        title: Padding(
-                          padding: EdgeInsets.only(top: 10),
-                          child: Text(
-                            widget.todos[index].title,
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
+                  var todos = widget.todos[index];
+                  var title = todos.title.toUpperCase();
+                  if (widget.search) {
+                    if (title.contains(widget.searchKey.toUpperCase())) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 5),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            color: todos.priority <= 4
+                                ? Colors.green.shade300
+                                : Colors.red.shade200,
+                          ),
+                          child: ListTile(
+                            title: Padding(
+                              padding: EdgeInsets.only(top: 10),
+                              child: Text(
+                                todos.title,
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                            subtitle: Padding(
+                                padding: EdgeInsets.only(top: 10, bottom: 10),
+                                child: Text(
+                                  todos.content,
+                                  style: TextStyle(color: Colors.white),
+                                )),
+                            trailing: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                InkWell(
+                                  onTap: () => _areYouSure(widget.todos[index]),
+                                  child: Icon(
+                                    Icons.delete,
+                                    color: Colors.red.shade700,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ),
-                        subtitle: Padding(
-                            padding: EdgeInsets.only(top: 10, bottom: 10),
+                      );
+                    } else {
+                      return Container();
+                    }
+                  } else {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 5),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          color: todos.priority <= 4
+                              ? Colors.green.shade300
+                              : Colors.red.shade200,
+                        ),
+                        child: ListTile(
+                          title: Padding(
+                            padding: EdgeInsets.only(top: 10),
                             child: Text(
-                              widget.todos[index].content,
-                              style: TextStyle(color: Colors.white),
-                            )),
-                        trailing: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            InkWell(
-                              onTap: () => _areYouSure(widget.todos[index]),
-                              child: Icon(
-                                Icons.delete,
-                                color: Colors.red.shade700,
+                              todos.title,
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
-                          ],
+                          ),
+                          subtitle: Padding(
+                              padding: EdgeInsets.only(top: 10, bottom: 10),
+                              child: Text(
+                                todos.content,
+                                style: TextStyle(color: Colors.white),
+                              )),
+                          trailing: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              InkWell(
+                                onTap: () => _areYouSure(todos),
+                                child: Icon(
+                                  Icons.delete,
+                                  color: Colors.red.shade700,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  );
+                    );
+                  }
                 },
               ),
             ),

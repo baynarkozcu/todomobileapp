@@ -5,7 +5,12 @@ class TodoAdd extends StatelessWidget {
   final TextEditingController controllerContent;
   final TextEditingController controllerPriority;
 
-  const TodoAdd({Key key, this.controllerTitle, this.controllerContent, this.controllerPriority}) : super(key: key);
+  const TodoAdd(
+      {Key key,
+      this.controllerTitle,
+      this.controllerContent,
+      this.controllerPriority})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -35,9 +40,10 @@ class TodoAdd extends StatelessWidget {
           ),
           TextField(
             keyboardType: TextInputType.number,
+            maxLength: 1,
             controller: controllerPriority,
             decoration: InputDecoration(
-                hintText: "Please Enter Todo Priority (1 - 10)",
+                hintText: "Please Enter Todo Priority (0 - 9)",
                 border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10))),
           ),

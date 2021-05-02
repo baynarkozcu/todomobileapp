@@ -12,9 +12,7 @@ class _MyHomePageState extends State<MyHomePage> {
   TextEditingController _controllerTitle = TextEditingController();
   TextEditingController _controllerContent = TextEditingController();
   TextEditingController _controllerPriority = TextEditingController();
-  List<Todo> _todos = [
-    Todo(title: "Deneme Başlık", content: "Deneme içerikkkk", priority: 2)
-  ];
+  List<Todo> _todos = [];
 
   _showMaterialDialog() {
     showDialog(

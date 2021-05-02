@@ -10,7 +10,11 @@ class TodoList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white,
-      child: ListView.builder(
+      child: todos.length == 0 ?
+      Center(
+        child: Text("There is nothing to do"),
+      ) :  
+      ListView.builder(
         itemCount: todos.length,
         itemBuilder: (context, index) {
           return Padding(
@@ -18,7 +22,7 @@ class TodoList extends StatelessWidget {
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(5),
-                color: todos[index].priority < 5  ?  Colors.green.shade300 : Colors.red.shade200,
+                color: todos[index].priority <= 4  ?  Colors.green.shade300 : Colors.red.shade200,
               ),
               child: ListTile(
                 onTap: () {

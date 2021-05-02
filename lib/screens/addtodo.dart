@@ -30,6 +30,7 @@ class TodoAdd extends StatelessWidget {
           ),
           TextField(
             controller: controllerContent,
+            maxLines: 3,
             decoration: InputDecoration(
                 hintText: "Please Enter Todo Content",
                 border: OutlineInputBorder(

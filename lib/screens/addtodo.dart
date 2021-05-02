@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo_mobile/components/todotextfield.dart';
 
 class TodoAdd extends StatelessWidget {
   final TextEditingController controllerTitle;
@@ -18,36 +19,18 @@ class TodoAdd extends StatelessWidget {
       height: MediaQuery.of(context).size.height / 3,
       child: Column(
         children: [
-          TextField(
-            controller: controllerTitle,
-            decoration: InputDecoration(
-                hintText: "Please Enter Todo Title",
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10))),
-          ),
+
+          TodoTextField(title: "Please Enter Todo Title",controller: controllerTitle,),
+          
           SizedBox(
             height: 15,
           ),
-          TextField(
-            controller: controllerContent,
-            maxLines: 3,
-            decoration: InputDecoration(
-                hintText: "Please Enter Todo Content",
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10))),
-          ),
+
+          TodoTextField(title: "Please Enter Todo Content",controller: controllerContent, lines: 3, ),
           SizedBox(
             height: 15,
           ),
-          TextField(
-            keyboardType: TextInputType.number,
-            maxLength: 1,
-            controller: controllerPriority,
-            decoration: InputDecoration(
-                hintText: "Please Enter Todo Priority (0 - 9)",
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10))),
-          ),
+          TodoTextField(title: "Please Enter Todo Priority (0 - 9)", controller: controllerPriority, length: 1, inputType: TextInputType.number,),
         ],
       ),
     );
